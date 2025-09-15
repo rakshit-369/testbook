@@ -1,28 +1,36 @@
 let subjects = ["English", "Static GK", "GK", "Hindi"];
 let currentSubject = null;
-let data = {}; // Will hold JSON questions
 
-// Fetch JSON from public folder
-fetch("/questions.json")
-  .then((res) => {
-    if (!res.ok) throw new Error("Failed to load questions.json");
-    return res.json();
-  })
-  .then((json) => {
-    data = json;
-    console.log("JSON loaded:", data);
+// Hardcoded questions/answers
+let data = {
+  "English": [
+    { "question": "What is a noun?", "answer": "A noun is a person, place, or thing." },
+    { "question": "What is a verb?", "answer": "A verb is an action word." },
+    { "question": "What is an adjective?", "answer": "An adjective describes a noun." }
+  ],
+  "Static GK": [
+    { "question": "Capital of India?", "answer": "New Delhi" },
+    { "question": "Largest planet?", "answer": "Jupiter" },
+    { "question": "Chemical symbol of water?", "answer": "H2O" }
+  ],
+  "GK": [
+    { "question": "Who is the current PM of India?", "answer": "Narendra Modi" },
+    { "question": "World's tallest mountain?", "answer": "Mount Everest" },
+    { "question": "Fastest land animal?", "answer": "Cheetah" }
+  ],
+  "Hindi": [
+    { "question": "हिंदी में संज्ञा क्या है?", "answer": "संज्ञा व्यक्ति, स्थान या वस्तु को बताती है।" },
+    { "question": "क्रिया क्या है?", "answer": "क्रिया कार्य को दर्शाती है।" },
+    { "question": "विशेषण क्या है?", "answer": "विशेषण संज्ञा का वर्णन करता है।" }
+  ]
+};
 
-    // Start app immediately
-    showScreen("subjects");
-  })
-  .catch((err) => {
-    console.error("Error loading JSON:", err);
-    alert("Failed to load questions. Please check questions.json.");
-  });
+// Show subjects page immediately
+showScreen("subjects");
 
 // Show/hide screens
 function showScreen(id) {
-  document.querySelectorAll(".screen").forEach((el) => el.classList.remove("active"));
+  document.querySelectorAll(".screen").forEach(el => el.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 }
 
@@ -32,10 +40,10 @@ function openSubject(sub) {
   showScreen("subjectPage");
 
   // Navbar: show other subjects
-  const otherSubjects = subjects.filter((s) => s !== sub);
+  const otherSubjects = subjects.filter(s => s !== sub);
   const container = document.getElementById("otherSubjects");
   container.innerHTML = "";
-  otherSubjects.forEach((s) => {
+  otherSubjects.forEach(s => {
     const btn = document.createElement("button");
     btn.textContent = s;
     btn.onclick = () => openSubject(s);
@@ -47,7 +55,7 @@ function openSubject(sub) {
   cardsContainer.innerHTML = "";
 
   const questions = data[sub] || [];
-  questions.forEach((q) => {
+  questions.forEach(q => {
     const card = document.createElement("div");
     card.className = "flip-card";
 
