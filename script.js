@@ -12,8 +12,8 @@ fetch("/questions.json")
     data = json;
     console.log("JSON loaded:", data);
 
-    // Start greeting → subjects flow after JSON is ready
-    setTimeout(() => showScreen("subjects"), 10000);
+    // Start app immediately
+    showScreen("subjects");
   })
   .catch((err) => {
     console.error("Error loading JSON:", err);
