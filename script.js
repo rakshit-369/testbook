@@ -1,32 +1,41 @@
 let subjects = ["English", "Static GK", "GK", "Hindi"];
 let currentSubject = null;
-let data = {}; // JSON data
+let data = {}; // Will hold JSON questions
 
-// Load JSON data
+// Fetch JSON from public folder
 fetch("/questions.json")
-  .then(res => res.json())
-  .then(json => {
-    data = json;
+  .then((res) => {
+    if (!res.ok) throw new Error("Failed to load questions.json");
+    return res.json();
   })
-  .catch(err => console.error("Error loading JSON:", err));
+  .then((json) => {
+    data = json;
+    console.log("JSON loaded:", data);
 
+    // Start greeting → subjects flow after JSON is ready
+    setTimeout(() => showScreen("subjects"), 10000);
+  })
+  .catch((err) => {
+    console.error("Error loading JSON:", err);
+    alert("Failed to load questions. Please check questions.json.");
+  });
+
+// Show/hide screens
 function showScreen(id) {
-  document.querySelectorAll(".screen").forEach(el => el.classList.remove("active"));
+  document.querySelectorAll(".screen").forEach((el) => el.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 }
 
-// Auto switch greeting -> subjects
-setTimeout(() => showScreen("subjects"), 1000);
-
+// Open a subject page
 function openSubject(sub) {
   currentSubject = sub;
   showScreen("subjectPage");
 
-  // Navbar buttons
-  const otherSubjects = subjects.filter(s => s !== sub);
+  // Navbar: show other subjects
+  const otherSubjects = subjects.filter((s) => s !== sub);
   const container = document.getElementById("otherSubjects");
   container.innerHTML = "";
-  otherSubjects.forEach(s => {
+  otherSubjects.forEach((s) => {
     const btn = document.createElement("button");
     btn.textContent = s;
     btn.onclick = () => openSubject(s);
@@ -38,7 +47,7 @@ function openSubject(sub) {
   cardsContainer.innerHTML = "";
 
   const questions = data[sub] || [];
-  questions.forEach(q => {
+  questions.forEach((q) => {
     const card = document.createElement("div");
     card.className = "flip-card";
 
@@ -57,6 +66,7 @@ function openSubject(sub) {
     inner.appendChild(back);
     card.appendChild(inner);
 
+    // Flip on click
     card.addEventListener("click", () => {
       inner.classList.toggle("flipped");
     });
@@ -65,6 +75,7 @@ function openSubject(sub) {
   });
 }
 
+// Back to subjects page
 function goBack() {
   showScreen("subjects");
 }
