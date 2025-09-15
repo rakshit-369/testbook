@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learning App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Greeting Screen -->
+  <div id="greeting" class="screen active">
+    <h1 class="greeting-text">👋 Welcome to Learning App!</h1>
+  </div>
+
+  <!-- Subjects Screen -->
+  <div id="subjects" class="screen">
+    <h2>Subjects</h2>
+    <div class="subjects-grid">
+      <button class="subject-btn" onclick="openSubject('English')">English</button>
+      <button class="subject-btn" onclick="openSubject('Static GK')">Static GK</button>
+      <button class="subject-btn" onclick="openSubject('GK')">GK</button>
+      <button class="subject-btn" onclick="openSubject('Hindi')">Hindi</button>
+    </div>
+  </div>
+
+  <!-- Subject Page -->
+  <div id="subjectPage" class="screen">
+    <nav class="navbar">
+      <div id="otherSubjects"></div>
+      <button onclick="goBack()">⬅ Back</button>
+    </nav>
+    <main id="cardsContainer" class="cards-container"></main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
