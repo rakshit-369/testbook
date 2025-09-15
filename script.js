@@ -3,7 +3,7 @@ let currentSubject = null;
 let data = {}; // JSON data
 
 // Load JSON data
-fetch("questions.json")
+fetch("/questions.json")
   .then(res => res.json())
   .then(json => {
     data = json;
